@@ -37,26 +37,20 @@ struct UpsideDownTriangleOptions: View {
 
     var body: some View {
         VStack(spacing: 24) {
-            if characters.count >= 2 {
-                HStack(spacing: 48) {
-                    characterButton(characters[0])
-                    characterButton(characters[1])
-                }
-            }
-
-            if characters.count >= 3 {
-                characterButton(characters[2])
-            }
-
             if characters.count == 1 {
                 characterButton(characters[0])
-            }
-
-            if characters.count == 2 {
+            } else if characters.count == 2 {
                 HStack(spacing: 48) {
                     characterButton(characters[0])
                     characterButton(characters[1])
                 }
+            } else if characters.count >= 3 {
+                HStack(spacing: 48) {
+                    characterButton(characters[0])
+                    characterButton(characters[1])
+                }
+
+                characterButton(characters[2])
             }
         }
     }
