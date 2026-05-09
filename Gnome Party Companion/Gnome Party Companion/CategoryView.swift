@@ -20,15 +20,7 @@ struct CategoryView: View {
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
 
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 24) {
-                    ForEach(category.characters) { character in
-                        NavigationLink {
-                            CharacterDetailView(character: character)
-                        } label: {
-                            IconMenuButton(title: character.name, imageName: character.imageName)
-                        }
-                    }
-                }
+                UpsideDownTriangleOptions(characters: category.characters)
 
                 Spacer()
             }
@@ -37,5 +29,44 @@ struct CategoryView: View {
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
+    }
+}
+
+struct UpsideDownTriangleOptions: View {
+    let characters: [GnomeCharacter]
+
+    var body: some View {
+        VStack(spacing: 24) {
+            if characters.count >= 2 {
+                HStack(spacing: 48) {
+                    characterButton(characters[0])
+                    characterButton(characters[1])
+                }
+            }
+
+            if characters.count >= 3 {
+                characterButton(characters[2])
+            }
+
+            if characters.count == 1 {
+                characterButton(characters[0])
+            }
+
+            if characters.count == 2 {
+                HStack(spacing: 48) {
+                    characterButton(characters[0])
+                    characterButton(characters[1])
+                }
+            }
+        }
+    }
+
+    func characterButton(_ character: GnomeCharacter) -> some View {
+        NavigationLink {
+            CharacterDetailView(character: character)
+        } label: {
+            IconMenuButton(title: character.name, imageName: character.imageName)
+                .frame(width: 140)
+        }
     }
 }
